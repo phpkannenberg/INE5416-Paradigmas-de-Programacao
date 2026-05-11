@@ -4,10 +4,11 @@ module Tabuleiro where
 type Posicao = (Int, Int)
 
 -- toda celula possui uma cor e um inteiro
+-- deriva de Eq para testar igualdade (==)
 data Celula = Preta Int | Branca Int
   deriving (Eq)
   
--- celula herda de Show
+-- celula herda de Show (converter para string)
 instance Show Celula where
   show (Preta n) = "[" ++ show n ++ "]"
   show (Branca n) = if n == 0 then " . "
@@ -33,17 +34,9 @@ setCelula :: Tabuleiro -> Posicao -> Celula -> Tabuleiro
 setCelula tab (linha, coluna) valor = 
   substituirNaPosicao linha (substituirNaPosicao coluna valor (tab !! linha)) tab
 
-ehBranca :: Celula -> Bool
-ehBranca (Branca _) = True
-ehBranca _ = False
-
 ehPreta :: Celula -> Bool
 ehPreta (Preta _) = True
 ehPreta _ = False
-
-valorBranca :: Celula -> Int
-valorBranca (Branca n) = n
-valorBranca _ = 0
 
 -- impressao recursiva das celulas de uma linha (celula por celula)
 imprimirLinha :: [Celula] -> IO ()
